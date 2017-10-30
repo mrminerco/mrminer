@@ -13,12 +13,8 @@ EMAIL=$(cat /mnt/user/config.txt | grep EMAIL | head -n1 | cut -d = -f 2 | cut -
 function boot()
 {
 	# Update Status
-	for i in {1..6}; do bash /root/mrminer/cron/status.sh; sleep 10; done >/dev/null 2>&1 &
-
-	# Clear Cache
-	sudo rm -f /home/miner/.cache/sessions/*
+	miner/.cache/sessions/*
 	sudo rm -f /etc/udev/rules.d/70-persistent-net.rules
-	sudo rm -f /etc/X11/xorg*
 
 	# Backup PP Table
 	x=0
