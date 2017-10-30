@@ -8,7 +8,7 @@ URL="https://mrminer.co/api"
 MAC=$(sudo ifconfig | grep eth0 | awk '{print $NF}' | sed 's/://g' | sha256sum)
 SERIAL=$(sudo dmidecode -s system-uuid | sed 's/-//g' | sha256sum)
 API=$(echo $MAC.$SERIAL | sha256sum | awk '{print substr($0,16,32);exit}')
-EMAIL=$(cat /mnt/user/config.txt | grep EMAIL | head -n1 | cut -d = -f 2 | cut -d ' ' -f 1 | tr '[:upper:]' '[:lower:]' | tr -d '\r')
+EMAIL=$(cat /mnt/usb/config.txt | grep EMAIL | head -n1 | cut -d = -f 2 | cut -d ' ' -f 1 | tr '[:upper:]' '[:lower:]' | tr -d '\r')
 
 function boot()
 {
