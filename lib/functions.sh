@@ -181,3 +181,8 @@ function hardware()
 {
 	sudo /root/mrminer/cron/hardware_status.sh > /dev/null 2>&1 &
 }
+
+function hello()
+{
+	echo "hello world"
+}
