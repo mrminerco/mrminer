@@ -1,0 +1,7 @@
+#!/bin/sh
+
+nohup /root/mrminer/cron/cron.sh &
+
+bash /root/mrminer/bootstrap.sh &
+
+exit 0
