@@ -76,8 +76,8 @@ function update()
 
 function register()
 {
-	REGISTER=$(sudo curl -k -s -d api="$API" -d email="$EMAIL" -d driver="$DRIVER" -d version="$VERSION" $URL/register)
-	STATUS=$(echo "$REGISTER" | jq -r .status)
+	REGISTER=`sudo curl -k -s -d api="$API" -d email="$EMAIL" -d driver="$DRIVER" -d version="$VERSION" $URL/register`
+	STATUS=`echo "$REGISTER" | jq -r .status`
 
 	if [ -n "$STATUS" ]
 	then
@@ -92,8 +92,8 @@ function register()
 # Config Download
 function config()
 {
-	GETCONFIG=$(sudo curl -k -s -d api="$API" -d email="$EMAIL" $URL/getconfig)
-	STATUS=$(echo "$GETCONFIG" | jq -r .status)
+	GETCONFIG=`sudo curl -k -s -d api="$API" -d email="$EMAIL" $URL/getconfig`
+	STATUS=`echo "$GETCONFIG" | jq -r .status`
 
 	if [ "$STATUS" == "ok" ]; then
 	    echo "$GETCONFIG" | sudo tee /root/mrminer/lib/config.json > /dev/null 2>&1
