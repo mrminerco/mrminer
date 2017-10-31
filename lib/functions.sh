@@ -8,7 +8,7 @@ URL="https://mrminer.co/api"
 MAC=$(sudo ifconfig | grep eth0 | awk '{print $NF}' | sed 's/://g' | sha256sum)
 SERIAL=$(sudo dmidecode -s system-uuid | sed 's/-//g' | sha256sum)
 API=$(echo $MAC.$SERIAL | sha256sum | awk '{print substr($0,16,32);exit}')
-EMAIL=$(cat /mnt/usb/config.txt | grep EMAIL | head -n1 | cut -d = -f 2 | cut -d ' ' -f 1 | tr '[:upper:]' '[:lower:]' | tr -d '\r')
+EMAIL=$(sudo cat /mnt/usb/config.txt | grep EMAIL | head -n1 | cut -d = -f 2 | cut -d ' ' -f 1 | tr '[:upper:]' '[:lower:]' | tr -d '\r')
 
 function boot()
 {
@@ -31,7 +31,7 @@ function boot()
 }
 function updateconfig()
 {
-	CONFIG=$(cat /root/mrminer/lib/config.json)
+	CONFIG=$(sudo cat /root/mrminer/lib/config.json)
 	MINER=$(echo $CONFIG | jq -r .miner)
 	FOLDER=$(echo $CONFIG | jq -r .path)
 	COMMAND=$(echo $CONFIG | jq -r .config)
@@ -49,7 +49,7 @@ function updateconfig()
 # Internet Test
 function connection_test()
 {
-	wget -q --tries=10 --timeout=10 --spider https://mrminer.co/login
+	sudo wget -q --tries=10 --timeout=10 --spider https://mrminer.co/login
 	if [[ $? -eq 0 ]]; then
         return 0
 	else
@@ -76,8 +76,8 @@ function update()
 
 function register()
 {
-	REGISTER=`curl -k -s -d api="$API" -d email="$EMAIL" -d driver="$DRIVER" -d version="$VERSION" $URL/register`
-	STATUS=`echo "$REGISTER" | jq -r .status`
+	REGISTER=$(sudo curl -k -s -d api="$API" -d email="$EMAIL" -d driver="$DRIVER" -d version="$VERSION" $URL/register)
+	STATUS=$(echo "$REGISTER" | jq -r .status)
 
 	if [ -n "$STATUS" ]
 	then
@@ -92,8 +92,8 @@ function register()
 # Config Download
 function config()
 {
-	GETCONFIG=`curl -k -s -d api="$API" -d email="$EMAIL" $URL/getconfig`
-	STATUS=`echo "$GETCONFIG" | jq -r .status`
+	GETCONFIG=$(sudo curl -k -s -d api="$API" -d email="$EMAIL" $URL/getconfig)
+	STATUS=$(echo "$GETCONFIG" | jq -r .status)
 
 	if [ "$STATUS" == "ok" ]; then
 	    echo "$GETCONFIG" | sudo tee /root/mrminer/lib/config.json > /dev/null 2>&1
@@ -141,9 +141,9 @@ function backup_oc_table()
 	while [ $x -le 10 ]; do
 	    if [ -e "/sys/class/drm/card$x/device/pp_table" ]
 	    then
-	        mkdir /var/tmp/pp_tables
-	        mkdir /var/tmp/pp_tables/gpu$x
-	        cp /sys/class/drm/card$x/device/pp_table /var/tmp/pp_tables/gpu$x/pp_table
+	        sudo mkdir /var/tmp/pp_tables
+	        sudo mkdir /var/tmp/pp_tables/gpu$x
+	        sudo cp /sys/class/drm/card$x/device/pp_table /var/tmp/pp_tables/gpu$x/pp_table
 	    fi
 	    x=$[x + 1]
 	done
@@ -173,7 +173,7 @@ function text()
 ##################################################################################
 function logo()
 {
-	cat /root/mrminer/lib/logo.sh
+	sudo cat /root/mrminer/lib/logo.sh
 }
 
 function hardware()
