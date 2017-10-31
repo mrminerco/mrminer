@@ -8,8 +8,8 @@ export GPU_SINGLE_ALLOC_PERCENT=100
 
 
 # Screen Cleaning
-killall screen -9
-screen -wipe
+#killall screen -9
+#screen -wipe
 clear
 sleep 1
 
