@@ -13,8 +13,8 @@ EMAIL=$(cat /mnt/usb/config.txt | grep EMAIL | head -n1 | cut -d = -f 2 | cut -d
 function boot()
 {
 	# Update Status
-	miner/.cache/sessions/*
-	sudo rm -f /etc/udev/rules.d/70-persistent-net.rules
+	sudo rm -rf /home/miner/.cache/sessions/*
+	sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules
 
 	# Backup PP Table
 	x=0
@@ -28,7 +28,6 @@ function boot()
 	    x=$[x + 1]
 	done
 
-	sudo ethtool -s eth0 wol g
 }
 function updateconfig()
 {
