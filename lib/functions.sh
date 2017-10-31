@@ -13,7 +13,7 @@ EMAIL=$(cat /mnt/usb/config.txt | grep EMAIL | head -n1 | cut -d = -f 2 | cut -d
 function boot()
 {
 	# Update Status
-	sudo rm -rf /home/miner/.cache/sessions/*
+	sudo rm -rf /home/mrminer/.cache/sessions/*
 	sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules
 
 	# Backup PP Table

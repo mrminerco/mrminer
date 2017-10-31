@@ -16,4 +16,4 @@ clear
 sleep 1
 
 # Register Screen
-screen -dm -S miner bash -c "/root/mrminer/boot/configure.sh"
+screen -dm -S mrminer bash -c "/root/mrminer/boot/configure.sh"

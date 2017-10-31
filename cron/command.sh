@@ -27,9 +27,9 @@ then
 
 	elif [ "$Response" == "update" ]; then
 
-	    screen -X -S miner quit
+	    screen -X -S mrminer quit
 	    sleep 1
-	    screen -dm -S miner bash -c "bash <(curl -k -s https://mrminer.co/update/update.sh)"
+	    screen -dm -S mrminer bash -c "bash <(curl -k -s https://mrminer.co/update/update.sh)"
 
 	fi
 fi
