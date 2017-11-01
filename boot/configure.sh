@@ -30,9 +30,9 @@ function task2()
 	printf "[   ] Update Check \r"
 	sleep 0.1
 	if update_check; then
-		printf "[   ] Update Checking... New version found! Updating... \r"
-	else
 		printf "[ %s ] %s \n\n" $(text green "OK") "Update Check"
+	else
+		printf "[ %s ] %s \n\n" $(text red "FAIL") "Update Check"
 	fi
 }
 ########################################################
