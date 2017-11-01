@@ -121,12 +121,12 @@ function backup_miner()
 function backup_oc_table()
 {
 	x=0
-	while [ $x -le 10 ]; do
+	while [ $x -le 14 ]; do
 	    if [ -e "/sys/class/drm/card$x/device/pp_table" ]
 	    then
-	        sudo mkdir /var/tmp/pp_tables
-	        sudo mkdir /var/tmp/pp_tables/gpu$x
-	        sudo cp /sys/class/drm/card$x/device/pp_table /var/tmp/pp_tables/gpu$x/pp_table
+	        mkdir /var/tmp/pp_tables
+	        mkdir /var/tmp/pp_tables/gpu$x
+	        cp /sys/class/drm/card$x/device/pp_table /var/tmp/pp_tables/gpu$x/pp_table
 	    fi
 	    x=$[x + 1]
 	done
