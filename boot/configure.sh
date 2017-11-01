@@ -121,7 +121,7 @@ printf "Manage your rig by logging into %s with your e-mail: %s\n\n" $(text yell
 text green "############################################################################\n\n"
 
 text yellow "Miner Settings \n\n"
-#updateconfig
+updateconfig
 sleep 1
 
 printf "%-15s : %s \n" "Core Mhz" $(text yellow "$CORE")
@@ -133,7 +133,7 @@ printf "%-15s : %s \n\n" "Min Fan Speed" $(text yellow "%$FAN")
 
 text green "############################################################################\n\n"
 
-#hardware
+hardware
 
 echo $CONFIGNAME
 echo $COMMAND
@@ -142,8 +142,8 @@ while true; do
 
     cd $DIR
 
-    if [ $FOLDER != "null" ]; then
-        #sudo $FOLDER $COMMAND
+    if [ "$FOLDER" != "null" ]; then
+        $FOLDER $COMMAND
         echo "Exiting... "
         sleep 5
     else
