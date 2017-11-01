@@ -8,8 +8,6 @@ KERNEL_VERSION=$(uname -r)
 
 DRIVER_VERSION=$(sudo dpkg-query --showformat='${Version}' --show amdgpu-pro)
 
-GPU_COUNT=$(ls -1 /sys/class/drm/card*/device/hwmon/hwmon*/pwm1 | wc -l)
-
 MOBO_BRAND=$(sudo dmidecode -s baseboard-manufacturer)
 MOBO_MODEL=$(sudo dmidecode -s baseboard-product-name)
 
@@ -22,6 +20,10 @@ HDD=$(sudo lshw -C disk -short | tail -n +3 | head -n 1 | awk '{$1=$2=$3=""}1' |
 
 SLOT=$(sudo dmidecode -t slot | grep "Designation:" | cut -b 15- | awk '{printf("%s ", $NF)}')
 
+GPUS=$(/root/mrminer/tool/amdmeminfo -s -o -q | jq  --raw-input .  | jq --slurp .)
+
+GPU_COUNT=$(ls -1 /sys/class/drm/card*/device/hwmon/hwmon*/pwm1 | wc -l)
+
 HARDWARE={}
 
 HARDWARE=`echo "$HARDWARE" | jq ".lan_ip=\"$LAN_IP\""`
@@ -33,6 +35,7 @@ HARDWARE=`echo "$HARDWARE" | jq ".cpu=\"$CPU_NAME\""`
 HARDWARE=`echo "$HARDWARE" | jq ".ram=\"$RAM_SIZE $RAM_TYPE\""`
 HARDWARE=`echo "$HARDWARE" | jq ".hdd=\"$HDD\""`
 HARDWARE=`echo "$HARDWARE" | jq ".slot=\"$SLOT\""`
+HARDWARE=`echo "$HARDWARE" | jq ".gpus=\"$GPUS\""`
 HARDWARE=`echo "$HARDWARE" | jq ".gpu_count=\"$GPU_COUNT\""`
 
 echo $HARDWARE
