@@ -31,7 +31,7 @@ function boot()
 }
 function updateconfig()
 {
-	CONFIG=$(sudo cat /root/mrminer/lib/config.json)
+	CONFIG=$(sudo cat /home/mrminer/config.json)
 	MINER=$(echo $CONFIG | jq -r .miner)
 	FOLDER=$(echo $CONFIG | jq -r .path)
 	COMMAND=$(echo $CONFIG | jq -r .config)
@@ -96,7 +96,7 @@ function config()
 	STATUS=`echo "$GETCONFIG" | jq -r .status`
 
 	if [ "$STATUS" == "ok" ]; then
-	    echo "$GETCONFIG" | sudo tee /root/mrminer/lib/config.json > /dev/null 2>&1
+	    echo "$GETCONFIG" | sudo tee /home/mrminer/config.json > /dev/null 2>&1
 	    sync
 	    return 0
 	else
