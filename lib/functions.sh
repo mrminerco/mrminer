@@ -112,7 +112,7 @@ function backup_miner()
 	sudo rm -Rf /root/miner
 	sudo rm -Rf /var/tmp/miner/
 	sudo cp -Rp /root/mrminer/miners /var/tmp/miner/
-	sleep 0.2
+	sleep 0.5
 	sudo ln -s /var/tmp/miner /root/miner
 	return 0
 }
