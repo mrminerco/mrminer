@@ -1,6 +1,5 @@
 #!/bin/bash
 source "/root/mrminer/lib/functions.sh"
-
 # Get Stats
 STATS=$(sudo /root/mrminer/tool/stats.sh)
 
