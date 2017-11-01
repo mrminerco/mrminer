@@ -60,7 +60,7 @@ function connection_test()
 ##################################################################################
 function update_check()
 {
-	sudo /root/mrminer/tool/update.sh > /dev/null 2>&1 &
+	#sudo /root/mrminer/tool/update.sh > /dev/null 2>&1 &
 	return 0
 }
 ##################################################################################
