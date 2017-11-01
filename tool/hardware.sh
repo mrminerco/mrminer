@@ -20,7 +20,7 @@ HDD=$(sudo lshw -C disk -short | tail -n +3 | head -n 1 | awk '{$1=$2=$3=""}1' |
 
 SLOT=$(sudo dmidecode -t slot | grep "Designation:" | cut -b 15- | awk '{printf("%s ", $NF)}')
 
-GPUS=$(/root/mrminer/tool/amdmeminfo -s -o -q | jq  --raw-input .  | jq --slurp .)
+GPUS=$(/root/mrminer/tool/amdmeminfo -s -o -q | tr '\n' ',' | sed 's/.$//')
 
 GPU_COUNT=$(ls -1 /sys/class/drm/card*/device/hwmon/hwmon*/pwm1 | wc -l)
 
