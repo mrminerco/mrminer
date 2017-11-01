@@ -1,6 +1,4 @@
 #!/bin/bash
-
-source "/root/mrminer/lib/settings.txt"
 source "/root/mrminer/lib/functions.sh"
 
 # Get Stats
