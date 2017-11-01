@@ -1,34 +1,28 @@
 #!/bin/bash
-##################################################################################
-# Startup Boot
-##################################################################################
-VERSION=0.51
-DRIVER=RX
-URL="https://mrminer.co/api"
-MAC=$(sudo ifconfig | grep eth0 | awk '{print $NF}' | sed 's/://g' | sha256sum)
-SERIAL=$(sudo dmidecode -s system-uuid | sed 's/-//g' | sha256sum)
-API=$(echo $MAC.$SERIAL | sha256sum | awk '{print substr($0,16,32);exit}')
-EMAIL=$(sudo cat /mnt/usb/config.txt | grep EMAIL | head -n1 | cut -d = -f 2 | cut -d ' ' -f 1 | tr '[:upper:]' '[:lower:]' | tr -d '\r')
 
+# Functions
 function boot()
 {
-	# Update Status
 	sudo rm -rf /home/mrminer/.cache/sessions/*
 	sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules
-
-	# Backup PP Table
-	x=0
-	while [ $x -le 10 ]; do
-	    if [ -e "/sys/class/drm/card$x/device/pp_table" ]
-	    then
-	        sudo mkdir /var/tmp/pp_tables
-	        sudo mkdir /var/tmp/pp_tables/gpu$x
-	        sudo cp /sys/class/drm/card$x/device/pp_table /var/tmp/pp_tables/gpu$x/pp_table
-	    fi
-	    x=$[x + 1]
-	done
-
+	backup_oc_table
+	backup_miner
+	config
 }
+
+# Basic Config
+function config()
+{
+	VERSION=0.51
+	URL="https://mrminer.co/api"
+	MAC=$(sudo ifconfig | grep eth0 | awk '{print $NF}' | sed 's/://g' | sha256sum)
+	SERIAL=$(sudo dmidecode -s system-uuid | sed 's/-//g' | sha256sum)
+	API=$(echo $MAC.$SERIAL | sha256sum | awk '{print substr($0,16,32);exit}')
+	EMAIL=$(sudo cat /mnt/usb/config.txt | grep EMAIL | head -n1 | cut -d = -f 2 | cut -d ' ' -f 1 | tr '[:upper:]' '[:lower:]' | tr -d '\r')
+}
+
+config
+# Update Config
 function updateconfig()
 {
 	CONFIG=$(sudo cat /home/mrminer/config.json)
@@ -44,8 +38,7 @@ function updateconfig()
 	CONFIGNAME=$(echo $CONFIG | jq -r .configname)
 	DIR=$(dirname $FOLDER)
 }
-##################################################################################
-##################################################################################
+
 # Internet Test
 function connection_test()
 {
@@ -55,28 +48,24 @@ function connection_test()
         return 1
 	fi
 }
-##################################################################################
+
 # Update Check
-##################################################################################
 function update_check()
 {
 	#sudo /root/mrminer/tool/update.sh > /dev/null 2>&1 &
 	return 0
 }
-##################################################################################
+
 # Update
-##################################################################################
 function update()
 {
 	return 0
 }
-##################################################################################
-# Register
-##################################################################################
 
+# Register
 function register()
 {
-	REGISTER=`sudo curl -k -s -d api="$API" -d email="$EMAIL" -d driver="$DRIVER" -d version="$VERSION" $URL/register`
+	REGISTER=`sudo curl -k -s -d api="$API" -d email="$EMAIL" -d version="$VERSION" $URL/register`
 	STATUS=`echo "$REGISTER" | jq -r .status`
 
 	if [ -n "$STATUS" ]
@@ -88,7 +77,7 @@ function register()
 		fi
 	fi
 }
-#########################################
+
 # Config Download
 function config()
 {
@@ -103,25 +92,21 @@ function config()
 	    return 1
 	fi
 }
-##################################################################################
 # Overclock
-##################################################################################
 function overclock()
 {
     sudo /root/mrminer/tool/overclock.sh > /dev/null 2>&1 &
     return 0
 }
-##################################################################################
+
 # Fan Speed
-##################################################################################
 function fanspeed()
 {
 
 	return 0
 }
-##################################################################################
+
 # Miner Backup
-##################################################################################
 function backup_miner()
 {
 	sudo rm -Rf /root/miner
@@ -132,9 +117,7 @@ function backup_miner()
 	return 0
 }
 
-##################################################################################
 # Backup OC Table
-##################################################################################
 function backup_oc_table()
 {
 	x=0
@@ -148,15 +131,13 @@ function backup_oc_table()
 	    x=$[x + 1]
 	done
 }
-##################################################################################
+
 # Text Color
-##################################################################################
 function text()
 {
   local color=${1}
   shift
   local text="${@}"
-
   case ${color} in
     red    ) tput setaf 1 ; tput bold ;;
     green  ) tput setaf 2 ; tput bold ;;
@@ -164,24 +145,17 @@ function text()
     blue   ) tput setaf 4 ; tput bold ;;
     grey   ) tput setaf 5 ; tput bold ;;
   esac
-
   echo -en "${text}"
   tput sgr0
 }
-##################################################################################
+
 # Logo
-##################################################################################
 function logo()
 {
 	sudo cat /root/mrminer/lib/logo.sh
 }
-
+# Hardware Status
 function hardware()
 {
 	sudo /root/mrminer/cron/hardware_status.sh > /dev/null 2>&1 &
-}
-
-function hello()
-{
-	echo "hello world"
 }
