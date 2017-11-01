@@ -10,14 +10,12 @@ text green "####################################################################
 
 text yellow "Configuration \n\n"
 
-
 ########################################################
 # Task 1: Connection
 function task1()
 {
 	printf "[   ] Connection Test \r"
 	sleep 0.1
-
 	if connection_test; then
 		printf "[ %s ] %s \n\n" $(text green "OK") "Connection Test"
 	else
@@ -31,17 +29,8 @@ function task2()
 {
 	printf "[   ] Update Check \r"
 	sleep 0.1
-
 	if update_check; then
 		printf "[   ] Update Checking... New version found! Updating... \r"
-		sleep 1
-		while [[ update_check ]]; do
-			update
-			printf "[   ] Update Checking... New version found! Upgrading to ... \r"
-		done
-		sleep 1
-		printf "[ %s ] Update Completed... Successful! \n\n" $(text green "OK")
-
 	else
 		printf "[ %s ] %s \n\n" $(text green "OK") "Update Check"
 	fi
@@ -56,7 +45,6 @@ function task3()
 		printf "[ %s ] %s \n\n" $(text green "OK") "Server Registration"
 	else
 		printf "[ %s ] Registering... Failed! \n\n" $(text red "FAIL")
-
 	fi
 }
 
@@ -70,7 +58,6 @@ function task4()
 		printf "[ %s ] %s \n\n" $(text green "OK") "Config Download"
 	else
 		printf "[ %s ] Config Downloading... Failed! \n\n" $(text red "FAIL")
-
 	fi
 }
 
@@ -84,7 +71,6 @@ function task5()
 		printf "[ %s ] %s \n\n" $(text green "OK") "GPU Overclock"
 	else
 		printf "[ %s ] GPU Overclocking... Failed! \n\n" $(text red "FAIL")
-
 	fi
 }
 ########################################################
@@ -100,7 +86,6 @@ function task6()
 
 	else
 		printf "[ %s ] Fan Speed Setting... Failed! \n\n" $(text red "FAIL")
-
 	fi
 }
 ########################################################
@@ -114,18 +99,17 @@ function task7()
 		printf "[ %s ] %s \n\n" $(text green "OK") "Miner Configuration"
 	else
 		printf "[ %s ] Miner Configuring... Failed! \n\n" $(text red "FAIL")
-
 	fi
 }
 
 ####################### OUTPUT
 
-for i in {1..7}; do
-
-	task$i
-	sleep 0.2
-
-done
+task1
+task2
+task3
+task4
+task5
+task6
 
 printf "Manage your rig by logging into %s with your e-mail: %s\n\n" $(text yellow "mrminer.co") $(text yellow "$EMAIL")
 
@@ -133,6 +117,7 @@ text green "####################################################################
 
 text yellow "Miner Settings \n\n"
 updateconfig
+sleep 1
 
 printf "%-15s : %s \n" "Core Mhz" $(text yellow "$CORE")
 printf "%-15s : %s \n" "Memory Mhz" $(text yellow "$MEMORY")
