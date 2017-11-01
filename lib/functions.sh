@@ -49,8 +49,7 @@ function updateconfig()
 # Internet Test
 function connection_test()
 {
-	sudo wget -q --tries=10 --timeout=10 --spider https://mrminer.co/login
-	if [[ $? -eq 0 ]]; then
+	if nc -zw3 -i2 google.com 80; then
         return 0
 	else
         return 1
