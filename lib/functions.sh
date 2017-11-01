@@ -126,7 +126,7 @@ function backup_oc_table()
 	    then
 	        mkdir /var/tmp/pp_tables
 	        mkdir /var/tmp/pp_tables/gpu$x
-	        # cp /sys/class/drm/card$x/device/pp_table /var/tmp/pp_tables/gpu$x/pp_table
+	        cp /sys/class/drm/card$x/device/pp_table /var/tmp/pp_tables/gpu$x/pp_table
 	    fi
 	    x=$[x + 1]
 	done
