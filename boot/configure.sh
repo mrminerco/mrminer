@@ -105,11 +105,16 @@ function task7()
 ####################### OUTPUT
 
 task1
-#task2
-#task3
-#task4
-#task5
-#task6
+sleep 1
+task2
+sleep 1
+task3
+sleep 1
+task4
+sleep 1
+task5
+sleep 1
+task6
 
 printf "Manage your rig by logging into %s with your e-mail: %s\n\n" $(text yellow "mrminer.co") $(text yellow "$EMAIL")
 
