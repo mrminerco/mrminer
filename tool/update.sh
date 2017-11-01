@@ -2,14 +2,14 @@
 
 cd /root/mrminer
 
-if git remote update; then
+if sudo git remote update; then
 
-  local=$(git rev-list --max-count=1 master)
-  origin=$(git rev-list --max-count=1 origin/master)
+  local=$(sudo git rev-list --max-count=1 master)
+  origin=$(sudo git rev-list --max-count=1 origin/master)
 
   if [ "$local" != "$origin" ]; then
-      git pull origin master
-      sync
+      sudo git pull origin master
+      sudo sync
   fi
 
 fi
