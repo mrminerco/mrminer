@@ -31,7 +31,7 @@ HARDWARE=`echo "$HARDWARE" | jq ".uptime=\"$UPTIME\""`
 HARDWARE=`echo "$HARDWARE" | jq ".kernel_version=\"$KERNEL_VERSION\""`
 HARDWARE=`echo "$HARDWARE" | jq ".driver_version=\"$DRIVER_VERSION\""`
 HARDWARE=`echo "$HARDWARE" | jq ".mobo=\"$MOBO_BRAND $MOBO_MODEL\""`
-HARDWARE=`echo "$HARDWARE" | jq ".cpu=\"$CPU_NAME\""`
+HARDWARE=`echo "$HARDWARE" | jq ".cpu=\"$CPU\""`
 HARDWARE=`echo "$HARDWARE" | jq ".ram=\"$RAM_SIZE $RAM_TYPE\""`
 HARDWARE=`echo "$HARDWARE" | jq ".hdd=\"$HDD\""`
 HARDWARE=`echo "$HARDWARE" | jq ".slot=\"$SLOT\""`
