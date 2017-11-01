@@ -1,14 +1,13 @@
 #!/bin/bash
 
-cd /root/mrminer
 
-if sudo git remote update; then
+if sudo sh -c 'git remote update'; then
 
-  local=$(sudo git rev-list --max-count=1 master)
-  origin=$(sudo git rev-list --max-count=1 origin/master)
+  local=$(sudo sh -c 'cd /root/mrminer && sudo git rev-list --max-count=1 master')
+  origin=$(sudo sh -c 'cd /root/mrminer && sudo git rev-list --max-count=1 origin/master')
 
   if [ "$local" != "$origin" ]; then
-      sudo git pull origin master
+      sudo sh -c 'cd /root/mrminer && sudo git pull origin master'
       sudo sync
   fi
 
