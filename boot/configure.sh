@@ -8,7 +8,7 @@ logo
 
 text green "############################################################################\n\n"
 
-text yellow "Configuration \n\n"
+text yellow "Configuration Started \n\n"
 
 ########################################################
 # Task 1: Connection
@@ -105,15 +105,15 @@ function task7()
 ####################### OUTPUT
 
 task1
-sleep 1
+sleep 0.5
 task2
-sleep 1
+sleep 0.5
 task3
-sleep 1
+sleep 0.5
 task4
-sleep 1
+sleep 0.5
 task5
-sleep 1
+sleep 0.5
 task6
 
 printf "Manage your rig by logging into %s with your e-mail: %s\n\n" $(text yellow "mrminer.co") $(text yellow "$EMAIL")
