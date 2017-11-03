@@ -10,10 +10,9 @@ export GPU_FORCE_64BIT_PTR=1
 
 
 # Screen Cleaning
-killall screen -9
+clear
 screen -wipe
 clear
-sleep 1
 
 # Register Screen
 screen -dm -S mrminer bash -c "/root/mrminer/boot/configure.sh" &
