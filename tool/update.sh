@@ -8,7 +8,6 @@ if sudo sh -c 'git remote update'; then
 
   if [ "$local" != "$origin" ]; then
       sudo sh -c 'cd /root/mrminer && sudo git pull origin master'
-      sudo sync
+      sync
   fi
-
 fi
