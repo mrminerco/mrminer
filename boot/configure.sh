@@ -18,7 +18,7 @@ function task1()
 	sleep 0.1
 
 	x=0
-	while [[ $x -gt 100 ]]; do
+	while [[ $x -le 30 ]]; do
 		printf "[   ] Connection Test ( Waiting Network... %s )\r" $(text yellow "$x")
 		if ifconfig | grep eth0; then
 			 x=999
