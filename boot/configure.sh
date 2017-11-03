@@ -16,16 +16,16 @@ function task1()
 {
 	printf "[   ] Connection Test \r"
 	sleep 0.1
-
-	x=0
-	while [[ $x -le 30 ]]; do
-		printf "[   ] Connection Test ( Waiting Network... %s )\r" $(text yellow "$x")
-		if ifconfig | grep eth0; then
+	x=1
+	while [[ $x -le 15 ]]; do
+		printf "[   ] Connection Test ( Waiting Network... %s s )\r" $(text yellow "$x")
+		LanIP=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')
+		if [ -n "$LanIP" ]; then
 			 x=999
 		fi
+		x=$((x + 1))
 		sleep 1
 	done
-
 	if connection_test; then
 		printf "[ %s ] %s \n\n" $(text green "OK") "Connection Test"
 	else
