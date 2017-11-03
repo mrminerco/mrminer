@@ -11,7 +11,5 @@ if sudo git --work-tree=/root/mrminer --git-dir=/root/mrminer/.git remote update
       sudo git --work-tree=/root/mrminer --git-dir=/root/mrminer/.git pull origin master
       sync
       sudo chmod -R +x /root/mrminer
-
   fi
-
 fi
