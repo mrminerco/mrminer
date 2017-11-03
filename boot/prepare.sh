@@ -11,7 +11,7 @@ export GPU_FORCE_64BIT_PTR=1
 
 # Screen Cleaning
 clear
-screen -wipe
+screen -ls | grep -o '[0-9]*\.[a0-Z9]*' | while read -r v ; do  screen -X -S $v quit; done
 clear
 
 # Register Screen
