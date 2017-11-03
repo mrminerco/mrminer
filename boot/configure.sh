@@ -8,7 +8,7 @@ logo
 
 text green "############################################################################\n\n"
 
-text yellow "Configuration Started \n\n"
+text yellow "Configuration \n\n"
 
 ########################################################
 # Task 1: Connection

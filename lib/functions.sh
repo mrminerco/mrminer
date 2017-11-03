@@ -38,6 +38,7 @@ function updateconfig()
 	CONFIGNAME=$(echo $CONFIG | jq -r .configname)
 	DIR=$(dirname $FOLDER)
 }
+updateconfig
 
 # Internet Test
 function connection_test()
