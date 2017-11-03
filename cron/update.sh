@@ -10,6 +10,7 @@ if sudo git --work-tree=/root/mrminer --git-dir=/root/mrminer/.git remote update
       sleep 0.5
       sudo git --work-tree=/root/mrminer --git-dir=/root/mrminer/.git pull origin master
       sync
+      #rsync -avz /root/mrminer/root/ /
       sudo chmod -R +x /root/mrminer
   fi
 fi

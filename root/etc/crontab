@@ -2,4 +2,7 @@ SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 MAILTO=""
 
-@hourly /root/mrminer/cron/hardware_status.sh
+@reboot mrminer nohup /root/mrminer/cron/cron.sh > /dev/null 2>&1 &
+* * * * *  mrminer bash -c 'sudo /root/mrminer/cron/update.sh' >/dev/null 2>&1
+
+## test 1
