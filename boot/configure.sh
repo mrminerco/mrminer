@@ -22,7 +22,7 @@ function task1()
 		LanIP=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')
 		if [ -n "$LanIP" ]; then
 			printf "[   ] Connection Test \r"
-			 x=999
+			x=100
 		fi
 		x=$((x + 1))
 		sleep 1.2
