@@ -24,7 +24,7 @@ function task1()
 			 x=999
 		fi
 		x=$((x + 1))
-		sleep 1
+		sleep 1.1
 	done
 	if connection_test; then
 		printf "[ %s ] %s \n\n" $(text green "OK") "Connection Test"
