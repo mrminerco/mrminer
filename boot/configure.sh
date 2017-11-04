@@ -21,12 +21,12 @@ function task1()
 		printf "[   ] Connection Test ( Waiting Network... %ss )\r" $(text yellow "$x")
 		LanIP=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')
 		if [ -n "$LanIP" ]; then
-			printf "[   ] Connection Test \r"
 			x=100
 		fi
 		x=$((x + 1))
-		sleep 1.2
+		sleep 1.5
 	done
+	printf "[   ] Connection Test \r"
 	if connection_test; then
 		printf "[ %s ] %s \n\n" $(text green "OK") "Connection Test"
 	else
