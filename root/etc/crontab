@@ -5,4 +5,4 @@ MAILTO=""
 @reboot mrminer nohup /root/mrminer/cron/cron.sh > /dev/null 2>&1 &
 * * * * *  mrminer bash -c 'sudo /root/mrminer/cron/update.sh' >/dev/null 2>&1
 
-## test 3
+## test 4
