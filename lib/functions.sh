@@ -55,7 +55,7 @@ function connection_test()
 # Update Check
 function update_check()
 {
-	#sudo /root/mrminer/tool/update.sh > /dev/null 2>&1 &
+	sudo /root/mrminer/cron/update.sh > /dev/null 2>&1 &
 	return 0
 }
 
