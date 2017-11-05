@@ -1,7 +1,6 @@
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-@reboot root ifup eth0 > /dev/null 2>&1 &
 @reboot mrminer nohup /root/mrminer/cron/cron.sh > /dev/null 2>&1 &
 */15 * * * *  mrminer bash -c 'sudo /root/mrminer/cron/update.sh' >/dev/null 2>&1
 
