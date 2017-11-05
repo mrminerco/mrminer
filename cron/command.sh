@@ -20,7 +20,7 @@ then
 
 	elif [ "$Response" == "settings" ]; then
 
-		if config; then
+		if getConfig; then
 			sudo /root/mrminer/tool/overclock.sh > /dev/null 2>&1 &
 			sudo /root/mrminer/tool/fanspeed.sh &
 		fi
