@@ -17,7 +17,7 @@ function boot()
 {
 	sudo rm -rf /home/mrminer/.cache/sessions/*
 	sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules
-	curl -k -d api="$API" -d email="$EMAIL" -d stats='{"total_hash": "", "total_hash_dual": "", "gpu_hash": "", "gpu_hash_dual": "", " "core": "", "mem": "", "temp": "", "fan": "", "watt": ""}' $URL/stats &
+	curl -k -d api="$API" -d email="$EMAIL" -d stats='{"total_hash": "", "total_hash_dual": "", "gpu_hash": "", "gpu_hash_dual": "", " "core": "", "mem": "", "temp": "", "fan": "", "watt": ""}' $URL/stats  /dev/null 2>&1 &
 	backup_oc_table
 	backup_miner
 	settings
@@ -124,13 +124,14 @@ function backup_miner()
 # Backup OC Table
 function backup_oc_table()
 {
+	sudo rm -rf /var/tmp/pp_tables && sync && sudo mkdir /var/tmp/pp_tables
 	x=0
 	while [ $x -le 14 ]; do
 	    if [ -e "/sys/class/drm/card$x/device/pp_table" ]
 	    then
-	        mkdir /var/tmp/pp_tables
-	        mkdir /var/tmp/pp_tables/gpu$x
-	        cp /sys/class/drm/card$x/device/pp_table /var/tmp/pp_tables/gpu$x/pp_table
+	        sudo mkdir /var/tmp/pp_tables/gpu$x
+	        sudo cp /sys/class/drm/card$x/device/pp_table /var/tmp/pp_tables/gpu$x/pp_table
+					sync
 	    fi
 	    x=$[x + 1]
 	done

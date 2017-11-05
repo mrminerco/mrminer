@@ -92,9 +92,7 @@ function task6()
 	sleep 0.1
 	if fanspeed; then
 		printf "[ %s ] %s \n\n" $(text green "OK") "Fan Speed"
-
 		sudo /root/mrminer/tool/fanspeed.sh &
-
 	else
 		printf "[ %s ] Fan Speed Setting... Failed! \n\n" $(text red "FAIL")
 	fi
