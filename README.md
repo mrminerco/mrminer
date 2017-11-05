@@ -1,4 +1,4 @@
-# mrminer
+# Mr.Miner Mining OS
 Remote working configured Linux based crypto-currency mining https://mrminer.co
 
 
