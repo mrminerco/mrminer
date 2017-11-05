@@ -17,7 +17,7 @@ function boot()
 {
 	sudo rm -rf /home/mrminer/.cache/sessions/*
 	sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules
-	curl -k -d api="$API" -d email="$EMAIL" -d stats='{"total_hash": "", "total_hash_dual": "", "gpu_hash": "", "gpu_hash_dual": "", " "core": "", "mem": "", "temp": "", "fan": "", "watt": ""}' $URL/stats
+	curl -k -d api="$API" -d email="$EMAIL" -d stats='{"total_hash": "", "total_hash_dual": "", "gpu_hash": "", "gpu_hash_dual": "", " "core": "", "mem": "", "temp": "", "fan": "", "watt": ""}' $URL/stats &
 	backup_oc_table
 	backup_miner
 	settings
