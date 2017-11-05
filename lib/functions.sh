@@ -62,6 +62,7 @@ function update_check()
 # Update
 function update()
 {
+	sudo /root/mrminer/cron/update.sh > /dev/null 2>&1 &
 	return 0
 }
 
