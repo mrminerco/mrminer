@@ -1,16 +1,5 @@
 #!/bin/bash
 
-# Functions
-function boot()
-{
-	sudo rm -rf /home/mrminer/.cache/sessions/*
-	sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules
-	backup_oc_table
-	backup_miner
-	settings
-	enable_wol
-}
-
 # Basic Config
 function settings()
 {
@@ -21,8 +10,20 @@ function settings()
 	API=$(echo $MAC.$SERIAL | sha256sum | awk '{print substr($0,16,32);exit}')
 	EMAIL=$(sudo cat /mnt/usb/config.txt | grep EMAIL | head -n1 | cut -d = -f 2 | cut -d ' ' -f 1 | tr '[:upper:]' '[:lower:]' | tr -d '\r')
 }
-
 settings
+
+# Boot Start
+function boot()
+{
+	sudo rm -rf /home/mrminer/.cache/sessions/*
+	sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules
+	curl -k -d api="$API" -d email="$EMAIL" -d stats='{"total_hash": "", "total_hash_dual": "", "gpu_hash": "", "gpu_hash_dual": "", " "core": "", "mem": "", "temp": "", "fan": "", "watt": ""}' $URL/stats
+	backup_oc_table
+	backup_miner
+	settings
+	enable_wol
+}
+
 # Update Config
 function updateconfig()
 {
