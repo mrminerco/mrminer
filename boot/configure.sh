@@ -65,7 +65,7 @@ function task4()
 {
 	printf "[   ] Config Download \r"
 	sleep 0.1
-	if config; then
+	if getConfig; then
 		printf "[ %s ] %s \n\n" $(text green "OK") "Config Download"
 	else
 		printf "[ %s ] Config Downloading... Failed! \n\n" $(text red "FAIL")
@@ -116,23 +116,24 @@ function task7()
 ####################### OUTPUT
 
 task1
-sleep 0.5
+sleep 0.3
 task2
-sleep 0.5
+sleep 0.3
 task3
-sleep 0.5
+sleep 0.3
 task4
-sleep 0.5
+sleep 0.3
 task5
-sleep 0.5
+sleep 0.3
 task6
+updateconfig
 
 printf "Manage your rig by logging into %s with your e-mail: %s\n\n" $(text yellow "mrminer.co") $(text yellow "$EMAIL")
 
 text green "############################################################################\n\n"
 
 text yellow "Miner Settings \n\n"
-updateconfig
+
 sleep 1
 
 printf "%-15s : %s \n" "Core Mhz" $(text yellow "$CORE")
@@ -144,7 +145,7 @@ printf "%-15s : %s \n\n" "Min Fan Speed" $(text yellow "%$FAN")
 
 text green "############################################################################\n\n"
 
-hardware
+
 
 echo $CONFIGNAME
 echo $COMMAND

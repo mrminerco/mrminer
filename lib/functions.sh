@@ -7,11 +7,12 @@ function boot()
 	sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules
 	backup_oc_table
 	backup_miner
-	config
+	settings
+	enable_wol
 }
 
 # Basic Config
-function config()
+function settings()
 {
 	VERSION=0.51
 	URL="https://mrminer.co/api"
@@ -21,7 +22,7 @@ function config()
 	EMAIL=$(sudo cat /mnt/usb/config.txt | grep EMAIL | head -n1 | cut -d = -f 2 | cut -d ' ' -f 1 | tr '[:upper:]' '[:lower:]' | tr -d '\r')
 }
 
-config
+settings
 # Update Config
 function updateconfig()
 {
@@ -80,7 +81,7 @@ function register()
 }
 
 # Config Download
-function config()
+function getConfig()
 {
 	GETCONFIG=`sudo curl -k -s -d api="$API" -d email="$EMAIL" $URL/getconfig`
 	STATUS=`echo "$GETCONFIG" | jq -r .status`
@@ -156,7 +157,12 @@ function logo()
 	sudo cat /root/mrminer/lib/logo.sh
 }
 # Hardware Status
-function hardware()
+function get_hardware()
 {
 	sudo /root/mrminer/cron/hardware_status.sh > /dev/null 2>&1 &
+}
+# Enable WOL
+function enable_wol()
+{
+	sudo ethtool -s eth0 wol g > /dev/null 2>&1 &
 }
