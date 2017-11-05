@@ -89,6 +89,7 @@ function getConfig()
 	if [ "$STATUS" == "ok" ]; then
 	    echo "$GETCONFIG" | sudo tee /home/mrminer/config.json > /dev/null 2>&1
 	    sync
+			updateconfig
 	    return 0
 	else
 	    return 1
