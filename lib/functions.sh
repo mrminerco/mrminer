@@ -125,11 +125,11 @@ function backup_miner()
 # Backup OC Table
 function backup_oc_table()
 {
+	sudo rm -rf /var/tmp/pp_tables && sleep 0.5 && sync && sudo mkdir /var/tmp/pp_tables
 	x=0
 	while [ $x -le 14 ]; do
 	    if [ -e "/sys/class/drm/card$x/device/pp_table" ]
 	    then
-					sudo rm -rf /var/tmp/pp_tables/gpu$x
 	        sudo mkdir /var/tmp/pp_tables/gpu$x
 	        sudo cp /sys/class/drm/card$x/device/pp_table /var/tmp/pp_tables/gpu$x/pp_table
 					sync
