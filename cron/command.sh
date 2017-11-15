@@ -9,6 +9,9 @@ if [ -n "$Response" ]
 then
 	if [ "$Response" == "reboot" ]; then
 
+		killall xterm -9
+		killall screen -9
+		clear
 		sudo bash /root/mrminer/tool/reboot.sh
 
 	elif [ "$Response" == "restart" ]; then
