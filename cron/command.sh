@@ -14,12 +14,9 @@ then
 		clear
 		sudo bash /root/mrminer/tool/reboot.sh
 
-	elif [ "$Response" == "restart" ]; then
+	elif [ "$Response" == "hardreboot" ]; then
 
-		killall xterm -9
-		killall screen -9
-		clear
-		screen -dm -S miner bash -c "/root/mrminer/boot/configure.sh" &
+		sudo sh -c "sudo rtcwake -m off -s 120"
 
 	elif [ "$Response" == "settings" ]; then
 
