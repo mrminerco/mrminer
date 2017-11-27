@@ -28,7 +28,7 @@ while [ $x -le 14 ]; do
     	STATS=`echo "$STATS" | jq ".mem += \"$(cat /sys/class/drm/card$x/device/pp_dpm_mclk  | grep "*" | awk '{print $2}' | tr -d 'Mhz');\""`
     	STATS=`echo "$STATS" | jq ".temp += \"$(sudo /root/mrminer/tool/ohgodatool --show-temp -i $x | tr -d 'C');\""`
     	STATS=`echo "$STATS" | jq ".fan += \"$(sudo /root/mrminer/tool/ohgodatool --show-fanspeed -i $x | tr -d '%');\""`
-      STATS=`echo "$STATS" | jq ".watt += \"$(cat /sys/kernel/debug/dri/$x/amdgpu_pm_info | grep "average GPU" | cut -b 2-10 | tr -d ' W');\""`
+      STATS=`echo "$STATS" | jq ".watt += \"$(cat /sys/kernel/debug/dri/$x/amdgpu_pm_info | grep "average GPU" | cut -b 2-9 | tr -d ' W');\""`
     fi
     x=$[x + 1]
 done
