@@ -58,7 +58,6 @@ function task3()
 		printf "[ %s ] Registering... Failed! \n\n" $(text red "FAIL")
 	fi
 }
-
 ########################################################
 # Task 4: Config
 function task4()
