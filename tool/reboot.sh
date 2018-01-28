@@ -1,7 +1,7 @@
 #!/bin/bash
 source "/root/mrminer/lib/functions.sh"
 
-curl -k -d api="$API" -d email="$EMAIL" -d $URL/watchdog
+curl -k -d api="$API" -d email="$EMAIL" $URL/watchdog
 
 sleep 3
 
