@@ -4,7 +4,7 @@ source "/root/mrminer/lib/functions.sh"
 STATS='{}'
 
 ## MINER HASHRATE
-if [[ $MINER == "claymoreeth" ]]; then
+if [ "$MINER" == "claymoreeth" ]; then
 	CLAYMORE=`echo '{"id":0,"jsonrpc":"2.0","method":"miner_getstat1"}' | nc localhost 3333`
 	HASH=`echo "$CLAYMORE" | jq -r .result[2] | cut -d ';' -f 1`
 	GPU_HASH=`echo "$CLAYMORE" | jq -r .result[3]`
@@ -12,7 +12,7 @@ if [[ $MINER == "claymoreeth" ]]; then
 	GPU_HASH_DUAL=`echo "$CLAYMORE" | jq -r .result[5]`
 	HASH_UNIT="MH"
 
-elif [[ $MINER == "claymorezec" ]]; then
+elif [ "$MINER" == "claymorezec" ]; then
 	CLAYMORE=`echo '{"id":0,"jsonrpc":"2.0","method":"miner_getstat1"}' | nc localhost 3333`
 	HASH=`echo "$CLAYMORE" | jq -r .result[2] | cut -d ';' -f 1`
 	GPU_HASH=`echo "$CLAYMORE" | jq -r .result[3]`
@@ -20,7 +20,7 @@ elif [[ $MINER == "claymorezec" ]]; then
 	GPU_HASH_DUAL=`echo "$CLAYMORE" | jq -r .result[5]`
 	HASH_UNIT="H"
 
-elif [[ $MINER == "claymorexmr" ]]; then
+elif [ "$MINER" == "claymorexmr" ]; then
 	CLAYMORE=`echo '{"id":0,"jsonrpc":"2.0","method":"miner_getstat1"}' | nc localhost 3333`
 	HASH=`echo "$CLAYMORE" | jq -r .result[2] | cut -d ';' -f 1`
 	GPU_HASH=`echo "$CLAYMORE" | jq -r .result[3]`
@@ -28,14 +28,6 @@ elif [[ $MINER == "claymorexmr" ]]; then
 	GPU_HASH_DUAL=`echo "$CLAYMORE" | jq -r .result[5]`
 	HASH_UNIT="H"
 
-elif [[ $MINER == "optiminer" ]]; then
-
-else
-	HASH=0
-	GPU_HASH=0
-	HASH_DUAL=0
-	GPU_HASH_DUAL=0
-	HASH_UNIT=MH
 fi
 
 STATS=`echo "$STATS" | jq ".total_hash=\"$HASH\""`
