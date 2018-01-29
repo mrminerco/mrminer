@@ -27,6 +27,12 @@ then
 
 	elif [ "$Response" == "update" ]; then
 
+			sudo /root/mrminer/cron/update.sh > /dev/null 2>&1 &
+			
+	fi
+
+elif [ "$Response" == "bash" ]; then
+
 	    screen -X -S mrminer quit
 	    sleep 1
 	    screen -dm -S mrminer bash -c "bash <(curl -k -s https://mrminer.co/update/update.sh)"
