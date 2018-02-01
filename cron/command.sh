@@ -5,7 +5,8 @@ Command=$(curl -k -s -d api="$API" -d email="$EMAIL" $URL/getcommand)
 Response=$(echo "$Command" | jq -r .response)
 
 # Execute Command
-if [ -n "$Response" ]; then
+if [ -n "$Response" ]
+then
 
 	if [ "$Response" == "reboot" ]; then
 
@@ -28,8 +29,6 @@ if [ -n "$Response" ]; then
 	elif [ "$Response" == "update" ]; then
 
 			sudo /root/mrminer/cron/update.sh > /dev/null 2>&1 &
-
-	fi
 
 	elif [ "$Response" == "bash" ]; then
 
