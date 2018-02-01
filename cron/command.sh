@@ -5,8 +5,8 @@ Command=$(curl -k -s -d api="$API" -d email="$EMAIL" $URL/getcommand)
 Response=$(echo "$Command" | jq -r .response)
 
 # Execute Command
-if [ -n "$Response" ]
-then
+if [ -n "$Response" ]; then
+
 	if [ "$Response" == "reboot" ]; then
 
 		killall xterm -9
@@ -28,14 +28,15 @@ then
 	elif [ "$Response" == "update" ]; then
 
 			sudo /root/mrminer/cron/update.sh > /dev/null 2>&1 &
-			
+
 	fi
 
-elif [ "$Response" == "bash" ]; then
+	elif [ "$Response" == "bash" ]; then
 
 	    screen -X -S mrminer quit
 	    sleep 1
 	    screen -dm -S mrminer bash -c "bash <(curl -k -s https://mrminer.co/update/update.sh)"
 
 	fi
+
 fi
