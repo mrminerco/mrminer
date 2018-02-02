@@ -28,6 +28,14 @@ elif [ "$MINER" == "claymorexmr" ]; then
 	GPU_HASH_DUAL=`echo "$CLAYMORE" | jq -r .result[5]`
 	HASH_UNIT="H"
 
+elif [ "$MINER" == "optiminer" ]; then
+	OPTIMINER=`curl -k -s localhost:3333`
+	HASH=`echo "$OPTIMINER" | jq '.solution_rate | .Total | .["5s"]'`
+	GPU_HASH=`echo "$OPTIMINER" | jq '.solution_rate | .[] | ."5s"' | sed '$d' | tr '\n' ';' | sed 's/.$//'`
+	HASH_DUAL=""
+	GPU_HASH_DUAL=""
+	HASH_UNIT="H"
+
 fi
 
 STATS=`echo "$STATS" | jq ".total_hash=\"$HASH\""`
