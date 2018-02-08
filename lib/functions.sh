@@ -5,7 +5,7 @@ function settings()
 {
 	VERSION=0.51
 	URL="https://mrminer.co/api"
-	MAC=$(sudo ifconfig -a | grep -ioE '([a-z0-9]{2}:){5}..' | sed 's/://g' | sha256sum)
+	MAC=$(sudo ifconfig | grep -ioE '([a-z0-9]{2}:){5}..' | sed 's/://g' | sha256sum)
 	SERIAL=$(sudo dmidecode -s system-uuid | sed 's/-//g' | sha256sum)
 	API=$(echo $MAC.$SERIAL | sha256sum | awk '{print substr($0,16,32);exit}')
 	EMAIL=$(sudo cat /mnt/usb/config.txt | grep EMAIL | head -n1 | cut -d = -f 2 | cut -d ' ' -f 1 | tr '[:upper:]' '[:lower:]' | tr -d '\r')
