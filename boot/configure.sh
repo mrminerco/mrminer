@@ -8,7 +8,7 @@ logo
 
 text green "############################################################################\n\n"
 
-sleep 2
+sleep 4
 
 text yellow "Configuration \n\n"
 

@@ -1,5 +1,4 @@
 #!/bin/sh
-sleep 3
 
 bash /root/mrminer/bootstrap.sh &
 
