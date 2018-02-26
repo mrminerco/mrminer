@@ -1,10 +1,8 @@
 #!/bin/bash
-
-source "/root/mrminer/lib/settings.txt"
 source "/root/mrminer/lib/functions.sh"
 
 # Get Stats
-HARDWARE=`sudo /root/mrminer/tool/hardware.sh`
+HARDWARE=$(sudo /root/mrminer/tool/hardware.sh)
 
 # Send Stats
 sleep 1

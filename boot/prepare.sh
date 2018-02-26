@@ -8,12 +8,13 @@ export GPU_SINGLE_ALLOC_PERCENT=100
 export GPU_MAX_HEAP_SIZE=100
 export GPU_FORCE_64BIT_PTR=1
 
+
 # Screen Cleaning
 clear
-killall screen -9 &
-screen -wipe &
+killall xterm -9
+killall screen -9
+#screen -ls | grep -o '[0-9]*\.[a0-Z9]*' | while read -r v ; do  screen -X -S $v quit; done
 clear
-sleep 1
 
 # Register Screen
-screen -dm -S miner bash -c "/root/mrminer/boot/configure.sh"
+screen -dm -S mrminer bash -c "/root/mrminer/boot/configure.sh" &
