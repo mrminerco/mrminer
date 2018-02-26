@@ -3,6 +3,14 @@
 # Basic Config
 function settings()
 {
+	DRIVER_AMD=$(lsmod | grep amd | wc -l)
+	DRIVER_NVIDIA=$(lsmod | grep nvidia | wc -l)
+
+	if [ $DRIVER_AMD -gt 0 ]; then
+		DRIVER=AMD
+	elif [ $DRIVER_NVIDIA -gt 0 ]; then
+		DRIVER=NVIDIA
+	fi	
 	VERSION=0.51
 	URL="https://mrminer.co/api"
 	MAC=$(sudo ifconfig | grep -ioE '([a-z0-9]{2}:){5}..' | sed 's/://g' | sha256sum)
