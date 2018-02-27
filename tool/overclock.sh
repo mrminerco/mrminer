@@ -5,18 +5,33 @@ updateconfig
 
 if [ "$DRIVER" == "AMD" ]; then
 
+    GPU_COUNT=$(ls -1 /sys/class/drm/card*/device/hwmon/hwmon*/pwm1 | wc -l)
     IFS=',' read -r -a CoreArray <<< "$CORE"
     IFS=',' read -r -a MemArray <<< "$MEMORY"
 
-    i=0;
-  	GPU_COUNT=$(ls -1 /sys/class/drm/card*/device/hwmon/hwmon*/pwm1 | wc -l)
-  	while [ $i -le $GPU_COUNT ]; do
-        if [ -e "/sys/class/drm/card$i/device/pp_table" ]; then
+    [[ ! -z $CoreArray ]] &&
+    CoreArray=($CoreArray) &&
+    for (( x=${#CoreArray[@]}; x < $GPU_COUNT; ++x )); do
+    	CoreArray[$x]=${CoreArray[$x-1]}
+    done
 
-            cp /var/tmp/pp_tables/gpu$i/pp_table /sys/class/drm/card$i/device/pp_table
+    [[ ! -z $MemArray ]] &&
+    MemArray=($MemArray) &&
+    for (( x=${#MemArray[@]}; x < $GPU_COUNT; ++x )); do
+    	MemArray[$x]=${MemArray[$x-1]}
+    done
+
+
+    i=0;
+  	g=0;
+  	while [ $g -le 16 ]; do
+
+        if [ -e "/sys/class/drm/card$g/device/pp_table" ]; then
+
+            cp /var/tmp/pp_tables/gpu$g/pp_table /sys/class/drm/card$g/device/pp_table
             sleep 0.2
-            echo manual > /sys/class/drm/card$i/device/power_dpm_force_performance_level
-            mem_states=`cat /sys/class/drm/card$i/device/pp_dpm_mclk | wc -l`
+            echo manual > /sys/class/drm/card$g/device/power_dpm_force_performance_level
+            mem_states=`cat /sys/class/drm/card$g/device/pp_dpm_mclk | wc -l`
             MEMSTATE=$(($mem_states-1))
 
             if [ ! -z "${CoreArray[$i]}" ] && [ ! -z "${MemArray[$i]}" ]; then
@@ -29,8 +44,11 @@ if [ "$DRIVER" == "AMD" ]; then
             echo $POWER > /sys/class/drm/card$i/device/pp_dpm_sclk
             echo $MEMSTATE > /sys/class/drm/card$i/device/pp_dpm_mclk
 
+            i=$[i + 1]
+
         fi
-        i=$[i + 1]
+
+        g=$[g + 1]
     done
 
 elif [ "$DRIVER" == "NVIDIA" ]; then
