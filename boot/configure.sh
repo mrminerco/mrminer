@@ -18,17 +18,6 @@ function task1()
 {
 	printf "[   ] Connection Test \r"
 	sleep 0.1
-#	x=1
-#	while [[ $x -le 15 ]]; do
-#		printf "[   ] Connection Test ( Waiting Network... %ss )\r" $(text yellow "$x")
-#		LanIP=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')
-#		if [ -n "$LanIP" ]; then
-#			x=100
-#		fi
-#		x=$((x + 1))
-#		sleep 1.3
-#	done
-#	printf "[   ] Connection Test \r"
 	if connection_test; then
 		printf "[ %s ] %s \n\n" $(text green "OK") "Connection Test"
 	else
@@ -139,27 +128,28 @@ sleep 1
 printf "%-15s : %s \n" "Core Mhz" $(text yellow "$CORE")
 printf "%-15s : %s \n" "Memory Mhz" $(text yellow "$MEMORY")
 printf "%-15s : %s \n" "Power Stage" $(text yellow "$POWER")
-printf "%-15s : %s%s \n" "Volt Stage" $(text yellow "$VOLT") $(text yellow "V")
+printf "%-15s : %s%s \n" "Volt Stage" $(text yellow "$VOLT") $(text yellow "mV")
 printf "%-15s : %s \n" "Target Temp" $(text yellow "$TEMP°C")
-printf "%-15s : %s \n\n" "Min Fan Speed" $(text yellow "%$FAN")
+printf "%-15s : %s \n\n" "Min Fan Speed" $(text yellow "$FAN%")
 
 text green "############################################################################\n\n"
 
 
-
 echo $CONFIGNAME
 echo $COMMAND
+
+sleep 2
 
 while true; do
 
     cd $DIR
 
     if [ "$FOLDER" != "null" ]; then
-        $FOLDER $COMMAND
+        sudo $FOLDER $COMMAND
         echo "Exiting... "
         sleep 5
     else
-        echo "Restart miner for download the config"
+        echo "Please select config from dashboard."
         sleep 5
     fi
 
