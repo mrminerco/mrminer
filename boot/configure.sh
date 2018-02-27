@@ -155,7 +155,7 @@ while true; do
     cd $DIR
 
     if [ "$FOLDER" != "null" ]; then
-        $FOLDER $COMMAND
+        sudo $FOLDER $COMMAND
         echo "Exiting... "
         sleep 5
     else
