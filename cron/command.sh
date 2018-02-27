@@ -17,7 +17,7 @@ then
 
 	elif [ "$Response" == "hardreboot" ]; then
 
-		sudo sh -c "sudo rtcwake -m off -s 120"
+		sudo sh -c "sudo rtcwake -m off -s 60"
 
 	elif [ "$Response" == "settings" ]; then
 
