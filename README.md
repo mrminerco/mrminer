@@ -4,6 +4,8 @@ Mr.Miner is a linux based operating system that mines GPU-minable coins. The OS 
 # Dashboard
 Mr.Miner Dashboard helps you to do mining with your rigs remotely. It provides all features that you need to manage your rig.
 
+![mrminer](https://mrminer.co/frontend/images/mrm/dashboard.png)
+
 # Mobile App
 We brings all features of the Dashboard to your mobile phone. This way you can easily monitor and manage your rigs on mobile.
 
