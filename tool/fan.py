@@ -1,4 +1,7 @@
 #!/usr/bin/python2.7
+
+# Copyright https://github.com/kovaxalive
+
 from __future__ import print_function
 import subprocess, time, sys, os
 import argparse, numpy
@@ -6,20 +9,20 @@ import curses
 
 parser = argparse.ArgumentParser(
  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument('-u', '--update-time', 
+parser.add_argument('-u', '--update-time',
 		help="Time between fan adjustments/checks in seconds",type=int, default=1)
-parser.add_argument('-T', '--target-temp', 
+parser.add_argument('-T', '--target-temp',
 		help="Target temperature in degrees Celsius", type=int, default=60)
-parser.add_argument('-m', '--min-speed', 
-		help="Minimum fan speed of GPU in %%. Warning: imprecise", 
+parser.add_argument('-m', '--min-speed',
+		help="Minimum fan speed of GPU in %%. Warning: imprecise",
 		type=int, default=40)
-parser.add_argument('--dynamic-printing', 
-		help="Use curses to print in current terminal (experimental, try enlarging terminal)", 
+parser.add_argument('--dynamic-printing',
+		help="Use curses to print in current terminal (experimental, try enlarging terminal)",
 		type=bool, default=False)
 args = parser.parse_args()
 
 time_between_fan_check = args.update_time
-assert 25 < args.target_temp < 100, "Irrational target temperature" 
+assert 25 < args.target_temp < 100, "Irrational target temperature"
 assert 0 <= args.min_speed <= 100,\
 	"Minimum fan speed must be between 0 and 100"
 
@@ -27,7 +30,7 @@ try:
 	open('/root/mrminer/lib/speeds.txt', 'r')
 except IOError:
 	print("""Could not import speeds.txt,
-	 ensure you are in the same folder as the python script file 
+	 ensure you are in the same folder as the python script file
 	is located""")
 	exit()
 
@@ -36,19 +39,19 @@ min_speed = args.min_speed
 
 def execute(cmd, print_output=False):
 	original_stdout = sys.stdout
-	
+
 	if not print_output:
 		nullfile = open(os.devnull, 'w')
 		sys.stdout = nullfile
-	
+
 	subprocess.Popen(cmd, shell=True)
-	
+
 	sys.stdout = original_stdout
 
 
 def get_stdout(cmd, first_line=False, split_cmd=False, parse_int=True):
 	stdout = []
-	
+
 	if split_cmd:
 		cmd = cmd.split()
 
@@ -64,7 +67,7 @@ def get_stdout(cmd, first_line=False, split_cmd=False, parse_int=True):
 				except ValueError:
 					pass
 			return stdout_line.strip()
-		
+
 		stdout.append(stdout_line.strip())
 
 	popen.stdout.close()
@@ -99,41 +102,41 @@ class setFanSpeed:
 		pwm_status_file = working_dir + "pwm1_enable"
 
 		pwm_status = lambda: get_stdout(
-				"head -1 " + pwm_status_file, 
+				"head -1 " + pwm_status_file,
 				first_line=True)
 
 		if pwm_status() == 0:
 			print("PWM disabled", end='')
-		
+
 		elif pwm_status() != 1:
 			print("Unknown PWM", end='')
 
 		else:
 			print("PWM already enabled for " + self.currentGPU)
 			return True
- 		
+
 		print( "for %s. Attempting to enable..." % (self.currentGPU))
 		print(pwm_status(), working_dir)
-		
+
 		execute("sudo chown $USER " + pwm_status_file)
 		execute('echo -n "1" >> ' + pwm_status_file)
-	
+
 		if pwm_status() != 1:
 			print("PWM enabling failed for " + self.currentGPU)
 			return False
 		else:
 			print("PWM succesfully enabled for " + self.currentGPU)
 			return True
-		
-		
+
+
 	def set_fan_speed(self, working_dir, tempgoal):
-		pwm_file = working_dir + "pwm1"		
+		pwm_file = working_dir + "pwm1"
 
 		execute("sudo chown $USER " + pwm_file)
 
-		maxspeed = get_stdout("head -1 " + working_dir + "pwm1_max", 
+		maxspeed = get_stdout("head -1 " + working_dir + "pwm1_max",
 				first_line=True)
-		minspeed = get_stdout("head -1 " + working_dir + "pwm1_min", 
+		minspeed = get_stdout("head -1 " + working_dir + "pwm1_min",
 				first_line=True)
 
 		# Set minspeed in %, prevent division by 0
@@ -142,18 +145,18 @@ class setFanSpeed:
 			minspeed_pct = float(minspeed) / maxspeed * 100
 
 
-		current_fan_speed = lambda: get_stdout("head -1 " + pwm_file, 
+		current_fan_speed = lambda: get_stdout("head -1 " + pwm_file,
 				first_line=True)
-		
-		speed_RPM = current_fan_speed()			
+
+		speed_RPM = current_fan_speed()
 		speed = float(speed_RPM) / maxspeed * 100 # In percentage
-		
-		
+
+
 		temp = self.get_temp(working_dir)
 
 		print("\n\n\t\tTemp =  %i `C, Fanspeed =  %i %% [ %i RPM ]\n\n\n" % (temp,
 					 speed, current_fan_speed()) )
-		
+
 		new_speed = None
 
 		temp_diff = temp - tempgoal
@@ -161,11 +164,11 @@ class setFanSpeed:
 
 		# 1/0.015 == made-up adjusted fan+1% ratio based on temp_diff_proportion,
 		#  ideal values may vary based on average temps and purpose
-		fanspeed_step = round(temp_diff_proportion / 0.015) 
-		
+		fanspeed_step = round(temp_diff_proportion / 0.015)
+
 		if speed < 50 and self.cardcount not in self.first_speedset:
-			# Prevent slow adjustment during first run 
-			new_speed = 70 
+			# Prevent slow adjustment during first run
+			new_speed = 70
 			self.first_speedset.append(self.cardcount)
 		elif temp_diff == 0:
 			print("Temperature is exactly on point: %i `C" % tempgoal)
@@ -186,11 +189,11 @@ class setFanSpeed:
 			update_curses(self.cardcount, temp, temp_diff,speed_RPM, speed)
 			return True
 
-		
+
 
 		if new_speed != None and\
-		new_speed > minspeed_pct and new_speed <= 100 :	
-			print("\nAdjusting fan speed:")	
+		new_speed > minspeed_pct and new_speed <= 100 :
+			print("\nAdjusting fan speed:")
 			print("Intended speed:", new_speed)
 
 			new_speed = int(round(new_speed * maxspeed / 100.0)) # Convert to RPM
@@ -211,30 +214,30 @@ class setFanSpeed:
 
 				print("Closest possible speed to intended",\
 				closest_possible_true_speed, "RPM")
-			
+
 			adjustment_status = get_stdout('echo -n "%i" >> ' % (new_speed) + pwm_file)
 
 			margin_of_error = 2 # %
 
-			time.sleep(0.75) 
-			
+			time.sleep(0.75)
+
 			true_new_speed = current_fan_speed()
 
-			adjustment_error = (intended_speed - true_new_speed)  / float(maxspeed) * 100 
+			adjustment_error = (intended_speed - true_new_speed)  / float(maxspeed) * 100
 
 			print("True new speed:", true_new_speed, "RPM")
-		
+
 			if margin_of_error >= abs(adjustment_error):
 				print ("Fan adjusted correctly")
-			
+
 			print("Fan speed adjustment error:", adjustment_error, "%",
 				end='\n\n')
 
 			update_curses(self.cardcount, temp, temp_diff, \
                  true_new_speed, true_new_speed / float(maxspeed) * 100)
 
-			
-	
+
+
 	def get_temp(self, working_dir):
 		temp_file = working_dir + "temp1_input"
 
@@ -256,15 +259,15 @@ class setFanSpeed:
 				self.set_fan_speed(working_dir, tempgoal=tempgoal)
 
 			self.cardcount += 1
-				
-			
+
+
 ## Execution
 # Prevent current fan speeds below minimum from staying there
 a = setFanSpeed(min_speed)
 
 if not args.dynamic_printing:
 	print("Control+C to quit\n")
-	print("Detected %i GPUs" % (len(a.cards)), '\n')	
+	print("Detected %i GPUs" % (len(a.cards)), '\n')
 	def update_curses(gpu_idx, temp, temp_diff, fan_rpm, fan_pct):
 		pass
 	while True:
@@ -277,7 +280,7 @@ curses.noecho()
 curses.cbreak()
 curses.curs_set(0) # Hide cursor
 
-max_screen = tuple(numpy.subtract(window.getmaxyx(), (1, 1) ) ) 
+max_screen = tuple(numpy.subtract(window.getmaxyx(), (1, 1) ) )
 
 def make_curses_coords():
 	global window
@@ -298,7 +301,7 @@ def make_curses_coords():
 		if pos >= max_screen:
 			y = init_y
 			x = init_x + width
-		
+
 		if pos >= max_screen:
 			break # If it is broken, dont fix it
 		curses_positions[i] = pos
@@ -314,7 +317,7 @@ def update_curses(gpu_idx, temp, temp_diff, fan_rpm, fan_pct):
 
 	try:
 		y, x = curses_positions[gpu_idx]
-		window.insstr(y, x, string)	
+		window.insstr(y, x, string)
 	except KeyError:
 		pass
 
@@ -326,10 +329,10 @@ while key != ord('q'):
 	window.addstr("\t\tPress Q at any time to quit...\n")
 	window.addstr("GPUs detected: %i\n" % (len(a.cards)) )
 	window.addstr("Global GPU temperature goal: %i `C"% (tempgoal))
-     
+
 	# Prevent conventional printing by pointing stdout to /dev/null
      #  temporarily
-     
+
 	stdout = sys.stdout
 	sys.stdout = open(os.devnull, 'w')
 
@@ -337,7 +340,7 @@ while key != ord('q'):
 
 	sys.stdout.close()
 	sys.stdout = stdout
- 
+
 	window.refresh()
 	time.sleep(time_between_fan_check)
 
