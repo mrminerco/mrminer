@@ -3,7 +3,6 @@
 source "/root/mrminer/lib/functions.sh"
 updateconfig
 
-
 if [ "$DRIVER" == "AMD" ]; then
 
     IFS=',' read -r -a CoreArray <<< "$CORE"

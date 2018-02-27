@@ -23,6 +23,7 @@ settings
 # Boot Start
 function boot()
 {
+	sudo timedatectl set-timezone UTC
 	sudo rm -rf /home/mrminer/.cache/sessions/*
 	sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules
 	sudo rm -rf /etc/X11/xorg.conf
