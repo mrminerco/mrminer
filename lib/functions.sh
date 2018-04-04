@@ -3,7 +3,7 @@
 # Basic Config
 function settings()
 {
-	DRIVER_AMD=$(lsmod | grep amd | wc -l)
+	DRIVER_AMD=$(lsmod | grep amdgpu | wc -l)
 	DRIVER_NVIDIA=$(lsmod | grep nvidia | wc -l)
 
 	if [ $DRIVER_AMD -gt 0 ]; then
@@ -162,7 +162,9 @@ function text()
     green  ) tput setaf 2 ; tput bold ;;
     yellow ) tput setaf 3 ; tput bold ;;
     blue   ) tput setaf 4 ; tput bold ;;
-    grey   ) tput setaf 5 ; tput bold ;;
+    purple ) tput setaf 5 ; tput bold ;;
+		cyan 	 ) tput setaf 6 ; tput bold ;;
+		white  ) tput setaf 7 ; tput bold ;;
   esac
   echo -en "${text}"
   tput sgr0
