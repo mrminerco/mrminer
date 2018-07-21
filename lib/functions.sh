@@ -185,10 +185,3 @@ function enable_wol()
 {
 	sudo ethtool -s eth0 wol g > /dev/null 2>&1 &
 }
-
-# Wallet
-function wallet()
-{
-	WALLET=$(cat /home/mrminer/config.json | jq -r .config)
-	sudo curl -k -s -d api="$API" -d email="$EMAIL" -d wallet="$WALLET" $URL/sendwallet
-}

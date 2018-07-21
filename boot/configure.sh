@@ -116,7 +116,6 @@ sleep 0.3
 task6
 updateconfig
 get_hardware
-wallet
 
 printf "Manage your rig by logging into %s with your e-mail: %s\n\n" $(text yellow "mrminer.co") $(text yellow "$EMAIL")
 
