@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo git --work-tree=/root/mrminer --git-dir=/root/mrminer/.git checkout -- .
+
 if sudo git --work-tree=/root/mrminer --git-dir=/root/mrminer/.git remote update; then
 
   Local=$(sudo git --work-tree=/root/mrminer --git-dir=/root/mrminer/.git rev-list --max-count=1 master)
