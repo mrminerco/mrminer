@@ -1,6 +1,12 @@
 #!/bin/bash
 source "/root/mrminer/lib/functions.sh"
 
+
+text yellow "############################################################################\n\n"
+
+text yellow "You are using old version of Mr.Miner\n"
+text yellow "Please download the new desktop version from mrminer.co\n\n"
+
 # Starting
 text green "############################################################################\n"
 
@@ -134,6 +140,15 @@ printf "%-15s : %s \n\n" "Min Fan Speed" $(text yellow "$FAN%")
 
 text green "############################################################################\n\n"
 
+
+
+if [ "$EMAIL" == "miner@mrminer.co" ]; then
+
+	echo "Your email address is default: miner@mrminer.co - Please change your e-mail address (config.txt on USB Flash). "
+	echo ""
+	text yellow "############################################################################\n\n"
+
+fi
 
 echo $CONFIGNAME
 echo $COMMAND
