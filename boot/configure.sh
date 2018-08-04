@@ -1,6 +1,12 @@
 #!/bin/bash
 source "/root/mrminer/lib/functions.sh"
 
+
+text yellow "############################################################################\n\n"
+
+text yellow "You are using old version of Mr.Miner\n"
+text yellow "Please download the new desktop version from mrminer.co\n\n"
+
 # Starting
 text green "############################################################################\n"
 
