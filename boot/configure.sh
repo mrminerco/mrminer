@@ -135,6 +135,15 @@ printf "%-15s : %s \n\n" "Min Fan Speed" $(text yellow "$FAN%")
 text green "############################################################################\n\n"
 
 
+
+if [ "$EMAIL" == "miner@mrminer.co" ]; then
+
+	echo "Your email address is default: miner@mrminer.co - Please change your e-mail address (config.txt on USB Flash). "
+	echo ""
+	text yellow "############################################################################\n\n"
+
+fi
+
 echo $CONFIGNAME
 echo $COMMAND
 
