@@ -1,6 +1,7 @@
 #!/bin/bash
 
-sudo git --work-tree=/root/mrminer --git-dir=/root/mrminer/.git checkout -- .
+sudo git --work-tree=/root/miner --git-dir=/root/miner/.git checkout -- .
+sudo git --work-tree=/root/miner --git-dir=/root/miner/.git clean -f
 
 if sudo git --work-tree=/root/mrminer --git-dir=/root/mrminer/.git remote update; then
 
