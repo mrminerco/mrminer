@@ -1,5 +1,5 @@
 # Mining OS
-Mr.Miner is a linux based operating system that mines Gpu-Mineable coins. The OS contains all mining tools that you need. The rig that works with the Mining OS always syncs with Mr.Miner Dashboard.
+Mr.Miner is a [Linux Mining OS](https://mrminer.co) that mines Gpu-Mineable coins. The OS contains all mining tools that you need. The rig that works with the Mining OS always syncs with Mr.Miner Dashboard.
 
 
 # Dashboard
